@@ -1,0 +1,6 @@
+{
+  "name": "Convite de Aniversário Super Mario",
+  "description": "Mini site convite de aniversário temático Super Mario com vídeo personalizável no painel superior, confirmação de presença (RSVP), contagem regressiva e informações da festa.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
