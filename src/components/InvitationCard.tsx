@@ -106,7 +106,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
           {/* Base Invitation Art (Untouched original photo & design) */}
           <img
             src="/assets/aistudio/image_a0905ca7.png"
-            alt="Convite de Aniversário Super Mario"
+            alt="Convite de Aniversário Super José"
             className="w-full h-full object-cover block"
             referrerPolicy="no-referrer"
           />

@@ -107,7 +107,7 @@ export const IntroVideoScreen: React.FC<IntroVideoScreenProps> = ({ videoSrc, on
         <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-yellow-400/40 shadow-lg">
           <span className="text-lg">⭐</span>
           <span className="font-mario text-yellow-300 text-xs tracking-wider">
-            Super Mario · Convite
+            Super José · Convite
           </span>
         </div>
 
