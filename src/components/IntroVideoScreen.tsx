@@ -9,7 +9,8 @@ interface IntroVideoScreenProps {
 
 export const IntroVideoScreen: React.FC<IntroVideoScreenProps> = ({ videoSrc, onComplete }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [secondsRemaining, setSecondsRemaining] = useState(8);
+  const [totalDuration, setTotalDuration] = useState<number>(41);
+  const [secondsRemaining, setSecondsRemaining] = useState(41);
   const [isMuted, setIsMuted] = useState(false);
   const [needsUserTap, setNeedsUserTap] = useState(false);
   const [progressPct, setProgressPct] = useState(0);
@@ -33,30 +34,31 @@ export const IntroVideoScreen: React.FC<IntroVideoScreenProps> = ({ videoSrc, on
         setNeedsUserTap(true);
       });
     });
-
-    const startTime = Date.now();
-    const DURATION_MS = 118000;
-
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, Math.ceil((DURATION_MS - elapsed) / 1000));
-      setSecondsRemaining(remaining);
-      setProgressPct(Math.min(100, (elapsed / DURATION_MS) * 100));
-
-      if (elapsed >= DURATION_MS) {
-        clearInterval(interval);
-        handleFinish();
-      }
-    }, 1000); // Changed interval to 1s for better perf over 118s
-
-    return () => clearInterval(interval);
   }, []);
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current && videoRef.current.duration && !isNaN(videoRef.current.duration)) {
+      const dur = Math.ceil(videoRef.current.duration);
+      setTotalDuration(dur);
+      setSecondsRemaining(dur);
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const cur = videoRef.current.currentTime;
+      const dur = videoRef.current.duration || totalDuration;
+      const remaining = Math.max(0, Math.ceil(dur - cur));
+      setSecondsRemaining(remaining);
+      setProgressPct(Math.min(100, (cur / dur) * 100));
+    }
+  };
 
   const handleFinish = () => {
     if (isExiting) return;
     soundEffects.playCoin();
     setIsExiting(true);
-    const currTime = videoRef.current ? videoRef.current.currentTime : 8;
+    const currTime = videoRef.current ? videoRef.current.currentTime : 0;
     setTimeout(() => {
       onComplete(currTime);
     }, 650);
@@ -96,6 +98,9 @@ export const IntroVideoScreen: React.FC<IntroVideoScreenProps> = ({ videoSrc, on
           src={videoSrc}
           playsInline
           autoPlay
+          onLoadedMetadata={handleLoadedMetadata}
+          onTimeUpdate={handleTimeUpdate}
+          onEnded={handleFinish}
           className="w-full h-full object-cover"
         />
         {/* Soft Vignette / Gradient overlays */}

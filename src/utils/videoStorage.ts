@@ -7,29 +7,17 @@ const CONFIG_KEY = 'mario_convite_video_config';
 // Built-in sample video for Mario celebration demonstration
 export const SAMPLE_VIDEOS = [
   {
-    id: 'mario-videoplayback',
-    title: 'Vídeo do Aniversariante (videoplayback)',
-    url: '/video/videoplayback.mp4',
+    id: 'mario-video',
+    title: 'Design sem nome.mp4',
+    url: encodeURI('/video/Design sem nome.mp4'),
     description: 'Vídeo oficial do convite'
-  },
-  {
-    id: 'mario-bday-1',
-    title: 'Super Mario - Animação de Aniversário',
-    url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    description: 'Vídeo dinâmico de celebração com música e efeitos'
-  },
-  {
-    id: 'mario-bday-2',
-    title: 'Contagem Regressiva & Fogos',
-    url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    description: 'Animação festiva com confetes e comemoração'
   }
 ];
 
 export const DEFAULT_VIDEO_CONFIG: VideoConfig = {
   type: 'upload',
-  src: '/video/videoplayback.mp4',
-  originalName: 'videoplayback.mp4',
+  src: encodeURI('/video/Design sem nome.mp4'),
+  originalName: 'Design sem nome.mp4',
   autoplay: true,
   muted: false,
   loop: true,
@@ -119,7 +107,11 @@ export function loadVideoConfig(): VideoConfig {
     const stored = localStorage.getItem(CONFIG_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
-      if (parsed.src && !parsed.src.includes('gtv-videos-bucket')) {
+      if (
+        parsed.src &&
+        !parsed.src.includes('gtv-videos-bucket') &&
+        !parsed.src.includes('videoplayback')
+      ) {
         return { ...DEFAULT_VIDEO_CONFIG, ...parsed };
       }
     }

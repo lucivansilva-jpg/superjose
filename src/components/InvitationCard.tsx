@@ -105,7 +105,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
         <div className="relative w-full aspect-[941/1672] select-none">
           {/* Base Invitation Art (Untouched original photo & design) */}
           <img
-            src="/assets/aistudio/image_a0905ca7.png"
+            src="/assets/aistudio/convite-fundo.png"
             alt="Convite de Aniversário Super José"
             className="w-full h-full object-cover block"
             referrerPolicy="no-referrer"
@@ -146,21 +146,6 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({
             }}
           />
 
-          {/* Presentes Box */}
-          <div
-            onClick={() => {
-              soundEffects.playCoin();
-              onOpenGifts();
-            }}
-            title="Ver detalhes dos presentes"
-            className="absolute z-20 cursor-pointer rounded-2xl hover:bg-white/15 active:bg-white/30 transition-colors"
-            style={{
-              top: '75.2%',
-              left: '47.5%',
-              width: '49.0%',
-              height: '14.5%'
-            }}
-          />
         </div>
       </div>
 
