@@ -8,7 +8,6 @@ import {
 } from './utils/videoStorage';
 import { soundEffects } from './utils/soundEffects';
 import { InvitationCard } from './components/InvitationCard';
-import { VideoAttachPage } from './components/VideoAttachPage';
 import { IntroVideoScreen } from './components/IntroVideoScreen';
 import { RsvpModal } from './components/RsvpModal';
 import { LocationModal } from './components/LocationModal';
@@ -18,7 +17,6 @@ import { GuestListModal } from './components/GuestListModal';
 const RSVPS_STORAGE_KEY = 'mario_convite_rsvps_list';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'invite' | 'attach-video'>('invite');
   const [videoConfig, setVideoConfig] = useState<VideoConfig>(() => loadVideoConfig());
   const [showIntro, setShowIntro] = useState<boolean>(true);
   const [videoPlaybackTime, setVideoPlaybackTime] = useState<number>(0);
@@ -54,11 +52,6 @@ export default function App() {
     restoreStoredBlob();
   }, []);
 
-  const handleSaveVideoConfig = (newConfig: VideoConfig) => {
-    setVideoConfig(newConfig);
-    saveVideoConfig(newConfig);
-    setCurrentView('invite');
-  };
 
   const handleAddRsvp = (newRsvp: GuestRSVP) => {
     setRsvps((prev) => {
@@ -86,20 +79,6 @@ export default function App() {
       localStorage.removeItem(RSVPS_STORAGE_KEY);
     }
   };
-
-  // If in dedicated "Anexar Vídeo" page view:
-  if (currentView === 'attach-video') {
-    return (
-      <VideoAttachPage
-        currentConfig={videoConfig}
-        onSave={handleSaveVideoConfig}
-        onBackToInvite={() => {
-          soundEffects.playCoin();
-          setCurrentView('invite');
-        }}
-      />
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#071326] text-white flex flex-col items-center justify-start py-2 sm:py-4 px-2 select-none selection:bg-yellow-400 selection:text-slate-900">
